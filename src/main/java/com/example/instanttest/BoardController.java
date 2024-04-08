@@ -10,4 +10,9 @@ public class BoardController {
         System.out.println("pr test");
         return null;
     }
+
+    public String board2(){
+        System.out.println("pr test");
+        return null;
+    }
 }
