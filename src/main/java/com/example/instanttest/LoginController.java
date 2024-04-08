@@ -53,4 +53,10 @@ public class LoginController {
         System.out.println("진짜 진짜8 최종 수정");
         return "null";
     }
+
+    @GetMapping("/login9")
+    public String login9() {
+        System.out.println("진짜 진짜9 최종 수정");
+        return "null";
+    }
 }
