@@ -17,4 +17,10 @@ public class LoginController {
         System.out.println("수정");
         return "null";
     }
+
+    @GetMapping("/login3")
+    public String login3() {
+        System.out.println("수정");
+        return "null";
+    }
 }
