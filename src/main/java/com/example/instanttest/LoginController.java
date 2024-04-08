@@ -23,4 +23,10 @@ public class LoginController {
         System.out.println("수정");
         return "null";
     }
+
+    @GetMapping("/login4")
+    public String login4() {
+        System.out.println("수정");
+        return "null";
+    }
 }
