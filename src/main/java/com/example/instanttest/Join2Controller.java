@@ -9,4 +9,21 @@ public class Join2Controller {
     public void join() {
         System.out.println("여기는 join2입니다.");
     }
+    @GetMapping("/join")
+    public void join2() {
+        System.out.println("여기는 join2입니다.");
+    }
+    @GetMapping("/join")
+    public void join3() {
+        System.out.println("여기는 join2입니다.");
+    }
+    @GetMapping("/join")
+    public void join4() {
+        System.out.println("여기는 join2입니다.");
+    }
+    @GetMapping("/join")
+    public void join5() {
+        System.out.println("여기는 join2입니다.");
+    }
+
 }
