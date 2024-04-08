@@ -15,4 +15,9 @@ public class BoardController {
         System.out.println("pr test");
         return null;
     }
+
+    public String board3(){
+        System.out.println("pr test");
+        return null;
+    }
 }
