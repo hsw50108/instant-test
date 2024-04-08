@@ -29,4 +29,10 @@ public class LoginController {
         System.out.println("수정");
         return "null";
     }
+
+    @GetMapping("/login5")
+    public String login5() {
+        System.out.println("최종 수정");
+        return "null";
+    }
 }
