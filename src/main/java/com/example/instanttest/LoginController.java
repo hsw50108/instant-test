@@ -38,7 +38,19 @@ public class LoginController {
 
     @GetMapping("/login6")
     public String login6() {
-        System.out.println("최종 수정");
+        System.out.println("진짜 최종 수정");
+        return "null";
+    }
+
+    @GetMapping("/login7")
+    public String login7() {
+        System.out.println("진짜 진짜 최종 수정");
+        return "null";
+    }
+
+    @GetMapping("/login8")
+    public String login8() {
+        System.out.println("진짜 진짜8 최종 수정");
         return "null";
     }
 }
