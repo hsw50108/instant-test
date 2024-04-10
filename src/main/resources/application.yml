@@ -1,1 +1,24 @@
-spring.application.name=instant-test
+#spring.application.name=instant-test
+spring:
+  application:
+    name: instant-test
+  datasource:
+    url: jdbc:mysql://localhost:3306/bbabap2?useSSL=true&serverTimezone=Asia/Seoul&readOnly=false
+    username: root
+    password: "123456789"
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.MySQLDialect
+    hibernate:
+      ddl-auto: create
+  main:
+    allow-circular-references: true
+server:
+  port: 8880
+jwt:
+  secret: "vmfhaltmskdlstkfkdgodyroqkfwkdbalroqkfwkdbalababababababababaa"
+logging:
+  level:
+    root: DEBUG
+tags-sorter: alpha
+operations-sorter: method
