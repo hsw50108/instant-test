@@ -4,8 +4,6 @@ import lombok.*;
 
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
 @Builder
 public class BoardRequestDTO {
     private String title;

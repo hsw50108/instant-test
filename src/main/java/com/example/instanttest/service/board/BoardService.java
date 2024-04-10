@@ -42,18 +42,12 @@ public class BoardService {
         User user = userRepository.findByEmail(userEmail);
         System.out.println(user);
 
-//        if (user == null) {
-//            throw new RuntimeException("User not found with email: " + userEmail);
-//        } else {
-//            System.out.println("사용자 정보를 가져온 이메일: " + userEmail);
-//        }
-
         Board board = Board.builder()
                 .title(requestDTO.getTitle())
                 .content(requestDTO.getContent())
                 .user(user)
-                .registeredAt(LocalDateTime.now()) // 등록 시간 추가
-                .deletedYn(false) // 게시글 생성시 삭제 여부 false로 등록
+                .registeredAt(LocalDateTime.now())
+                .deletedYn(false)
                 .build();
         Board savedBoard = boardRepository.save(board);
 
@@ -62,12 +56,12 @@ public class BoardService {
 
     @Transactional(readOnly = true)
     public List<BoardResponseDTO> getAllBoards() {
-        List<Board> boards = boardRepository.findAll();
-        boards.removeIf(Board::getDeletedYn);
+        List<Board> boards = boardRepository.findAllByDeletedYnFalse();
         return boards.stream()
                 .map(this::convertToDTO)
                 .collect(Collectors.toList());
     }
+
 
     @Transactional(readOnly = true)
     public BoardResponseDTO getBoardById(Long id) {
@@ -82,7 +76,7 @@ public class BoardService {
         List<Comment> comments = commentRepository.findAllByBoardId(id);
         comments.removeIf(Comment::getDeletedYn);
 
-        board.setComments(comments);
+//        board.setComments(comments);
 
         return convertToDTO(board); // 해당 게시물이 있는 경우
     }
@@ -121,9 +115,7 @@ public class BoardService {
             throw new RuntimeException("You do not have permission to update this board.");
         }
 
-        board.setTitle(requestDTO.getTitle());
-        board.setContent(requestDTO.getContent());
-        board.setUpdatedAt(LocalDateTime.now());
+        board.updateContent(requestDTO.getTitle(), requestDTO.getContent(), LocalDateTime.now());
 
         return convertToDTO(board);
     }
@@ -146,11 +138,9 @@ public class BoardService {
             throw new RuntimeException("You do not have permission to delete this board.");
         }
 
-        // 삭제 여부 플래그 설정
-        board.setDeletedYn(true);
+        board.deleteContent(true, LocalDateTime.now());
 
-        // 삭제 시간 설정
-        board.setDeletedAt(LocalDateTime.now());
+        boardRepository.save(board);
 
         // 실제로 데이터를 삭제하는 경우
         // boardRepository.delete(board);

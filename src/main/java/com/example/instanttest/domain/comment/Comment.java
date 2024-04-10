@@ -19,27 +19,24 @@ public class Comment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "comment_id")
+    @Column(nullable = false)
     private Long id;
 
-    @Column(name = "content")
+    @Column(nullable = false)
     private String content;
 
-    @Column(name = "created_at")
+    @Column(nullable = false)
     private LocalDateTime createdAt;
 
-    @Column(name = "deleted_yn")
     private Boolean deletedYn;
 
-    @Column(name = "deleted_at")
-    private LocalDateTime deletedAt; // 삭제 시간 추가
+    private LocalDateTime deletedAt;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "email", referencedColumnName = "email", nullable = false)
     private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "board_tbl_id", referencedColumnName = "board_tbl_id", nullable = false)
     private Board board;
 
     @Builder
@@ -47,7 +44,7 @@ public class Comment {
         this.id = id;
         this.content = content;
         this.deletedYn = deletedYn;
-        this.createdAt = createdAt;
+        this.createdAt = createdAt != null ? createdAt : LocalDateTime.now();
         this.deletedAt = deletedAt;
         this.user = user;
         this.board = board;
