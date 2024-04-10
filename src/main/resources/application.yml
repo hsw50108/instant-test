@@ -2,6 +2,9 @@
 spring:
   application:
     name: instant-test
+  mvc:
+    compile-options:
+      compilerArgs: -parameters
   datasource:
     url: jdbc:mysql://localhost:3306/bbabap2?useSSL=true&serverTimezone=Asia/Seoul&readOnly=false
     username: root

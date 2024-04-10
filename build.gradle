@@ -28,7 +28,7 @@ dependencies {
 
     // validation & security
     implementation 'org.springframework.boot:spring-boot-starter-validation'
-//    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
 
     // db
     runtimeOnly 'com.mysql:mysql-connector-j'
@@ -59,3 +59,8 @@ dependencies {
 tasks.named('test') {
     useJUnitPlatform()
 }
+
+tasks.withType(JavaCompile).configureEach {
+    options.compilerArgs << "-parameters"
+}
+

@@ -1,0 +1,13 @@
+package com.example.instanttest.repository.Comment;
+
+import com.example.instanttest.domain.comment.Comment;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
+
+@Repository
+public interface CommentRepository extends JpaRepository<Comment, Long> {
+    List<Comment> findAllByBoardId(Long boardId);
+
+}
