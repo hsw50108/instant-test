@@ -11,7 +11,6 @@ import lombok.Setter;
 import java.time.LocalDateTime;
 
 @Getter
-@Setter
 @NoArgsConstructor
 @Entity
 @Table(name = "Comment")
@@ -48,5 +47,14 @@ public class Comment {
         this.deletedAt = deletedAt;
         this.user = user;
         this.board = board;
+    }
+
+    public void deleteComment(boolean deletedYn, LocalDateTime deletedAt) {
+        this.deletedYn = deletedYn;
+        this.deletedAt = deletedAt;
+    }
+
+    public boolean isDeleted() {
+        return deletedYn;
     }
 }

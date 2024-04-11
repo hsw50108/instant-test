@@ -70,4 +70,8 @@ public class Board {
         this.deletedYn = deletedYn;
         this.deletedAt = deletedAt;
     }
+
+    public boolean isDeleted() {
+        return deletedYn;
+    }
 }

@@ -20,6 +20,8 @@ public interface BoardRepository extends JpaRepository<Board, Long> {
 
     List<Board> findAllByDeletedYnFalse();
 
+    Optional<Board> findByIdAndDeletedYnFalse(Long id);
+
 //    @EntityGraph(attributePaths = "comments")
 //    Optional<Board> findById(Long id);
 }

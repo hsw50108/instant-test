@@ -32,17 +32,17 @@ public class CommentService {
         Board board = boardRepository.findById(requestDTO.getBoardId())
                 .orElseThrow(() -> new RuntimeException("Board not found with id: " + requestDTO.getBoardId()));
 
-        String userEmail = SecurityUtils.getCurrentUserEmail(); // 현재 사용자의 이메일 가져오기
+        // 삭제된 게시글에 댓글이 등록되는 것을 방지
+        if (board.isDeleted()) {
+            throw new RuntimeException("Cannot add comment to a deleted board.");
+        }
+
+        String userEmail = SecurityUtils.getCurrentUserEmail();
 
         User user = userRepository.findByEmail(userEmail);
         if (user == null) {
             throw new RuntimeException("User not found with email: " + userEmail);
         }
-
-//        // 사용자 권한 확인: 게시물 작성자만 댓글을 작성할 수 있도록
-//        if (!board.getUser().getEmail().equals(userEmail)) {
-//            throw new RuntimeException("You do not have permission to add comment to this board.");
-//        }
 
         Comment comment = Comment.builder()
                 .content(requestDTO.getContent())
@@ -64,15 +64,19 @@ public class CommentService {
         Comment comment = commentRepository.findById(commentId)
                 .orElseThrow(() -> new RuntimeException("Comment not found with id: " + commentId));
 
-        String userEmail = SecurityUtils.getCurrentUserEmail(); // 현재 사용자의 이메일 가져오기
+        // 이미 삭제된 댓글인지 확인
+        if (comment.isDeleted()) {
+            throw new RuntimeException("This comment has already been deleted.");
+        }
+
+        String userEmail = SecurityUtils.getCurrentUserEmail();
 
         // 사용자 권한 확인: 댓글 작성자만 삭제할 수 있도록
         if (!comment.getUser().getEmail().equals(userEmail)) {
             throw new RuntimeException("You do not have permission to delete this comment.");
         }
 
-        comment.setDeletedAt(LocalDateTime.now()); // 삭제 시간 설정
-        comment.setDeletedYn(true); // 삭제 여부 설정
+        comment.deleteComment(true, LocalDateTime.now());
 
         // 실제로 데이터를 삭제하는 경우
         // commentRepository.delete(comment);
@@ -80,9 +84,14 @@ public class CommentService {
 
     @Transactional(readOnly = true)
     public List<CommentResponseDTO> getAllCommentsByBoardId(Long boardId) {
-        List<Comment> comments = commentRepository.findAllByBoardId(boardId);
-        comments.removeIf(Comment::getDeletedYn);
-        System.out.println(comments.stream().map(this::convertToDTO).collect(Collectors.toList()));
+        Board board = boardRepository.findByIdAndDeletedYnFalse(boardId)
+                .orElseThrow(() -> new RuntimeException("Board not found with id: " + boardId));
+
+        // 삭제된 게시글의 댓글은 조회하지 않음
+        List<Comment> comments = board.getComments().stream()
+                .filter(comment -> !comment.isDeleted())
+                .toList();
+
         return comments.stream()
                 .map(this::convertToDTO)
                 .collect(Collectors.toList());
