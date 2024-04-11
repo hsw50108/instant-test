@@ -76,15 +76,13 @@ public class BoardService {
         List<Comment> comments = commentRepository.findAllByBoardId(id);
         comments.removeIf(Comment::getDeletedYn);
 
-//        board.setComments(comments);
-
-        return convertToDTO(board); // 해당 게시물이 있는 경우
+        return convertToDTO(board);
     }
 
     @Transactional(readOnly = true)
     public Page<BoardResponseDTO> searchBoardsByKeyword(String keyword, Pageable pageable) {
         // 제목(title) 또는 내용(contents)에서 키워드를 포함하는 게시물을 검색
-        Page<Board> boards = boardRepository.findByTitleContainingIgnoreCaseOrContentContainingIgnoreCase(keyword, keyword, pageable);
+        Page<Board> boards = boardRepository.findByTitleContainingIgnoreCaseAndDeletedYnFalseOrContentContainingIgnoreCaseAndDeletedYnFalse(keyword, keyword, pageable);
 
         // 검색 결과를 BoardResponseDTO로 변환
         return boards.map(this::convertToDTO);
@@ -138,6 +136,10 @@ public class BoardService {
             throw new RuntimeException("You do not have permission to delete this board.");
         }
 
+        if (board.getDeletedYn()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Board with id " + id + " is already deleted");
+        }
+
         board.deleteContent(true, LocalDateTime.now());
 
         boardRepository.save(board);
@@ -171,6 +173,7 @@ public class BoardService {
 
     private BoardResponseDTO convertToDTO(Board board) {
         List<CommentResponseDTO> commentDTOs = board.getComments().stream()
+                .filter(comment -> !comment.getDeletedYn())
                 .map(comment -> CommentResponseDTO.builder()
                         .id(comment.getId())
                         .content(comment.getContent())

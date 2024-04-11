@@ -16,11 +16,13 @@ public interface BoardRepository extends JpaRepository<Board, Long> {
     @Query("SELECT b FROM Board b LEFT JOIN FETCH b.comments WHERE b.id = :boardId")
     Optional<Board> findByIdWithComments(@Param("boardId") Long boardId);
 
-    Page<Board> findByTitleContainingIgnoreCaseOrContentContainingIgnoreCase(String title, String content, Pageable pageable);
+//    Page<Board> findByTitleContainingIgnoreCaseOrContentContainingIgnoreCase(String title, String content, Pageable pageable);
 
     List<Board> findAllByDeletedYnFalse();
 
     Optional<Board> findByIdAndDeletedYnFalse(Long id);
+
+    Page<Board> findByTitleContainingIgnoreCaseAndDeletedYnFalseOrContentContainingIgnoreCaseAndDeletedYnFalse(String title, String content, Pageable pageable);
 
 //    @EntityGraph(attributePaths = "comments")
 //    Optional<Board> findById(Long id);
