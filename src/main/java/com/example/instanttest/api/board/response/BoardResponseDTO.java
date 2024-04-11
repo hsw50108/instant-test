@@ -12,9 +12,8 @@ public class BoardResponseDTO {
     private Long id;
     private String title;
     private String content;
+    private String nickname;
     private LocalDateTime registeredAt;
     private LocalDateTime updatedAt;
-    private Boolean deletedYn;
-    private String email;
     private List<CommentResponseDTO> comments;
 }

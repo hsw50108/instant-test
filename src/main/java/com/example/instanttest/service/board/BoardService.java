@@ -189,7 +189,7 @@ public class BoardService {
                         .id(comment.getId())
                         .content(comment.getContent())
                         .createdAt(comment.getCreatedAt())
-                        .email(comment.getUser().getEmail())
+                        .nickname(comment.getUser().getNickname())
                         .boardId(comment.getBoard().getId())
                         .build())
                 .collect(Collectors.toList());
@@ -198,10 +198,9 @@ public class BoardService {
                 .id(board.getId())
                 .title(board.getTitle())
                 .content(board.getContent())
+                .nickname(board.getUser().getNickname())
                 .registeredAt(board.getRegisteredAt())
                 .updatedAt(board.getUpdatedAt())
-                .deletedYn(board.getDeletedYn())
-                .email(board.getUser().getEmail())
                 .comments(commentDTOs)
                 .build();
     }

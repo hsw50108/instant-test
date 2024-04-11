@@ -8,9 +8,9 @@ import java.time.LocalDateTime;
 @Builder
 @Getter
 public class CommentResponseDTO {
+    private Long boardId;
     private Long id;
+    private String nickname;
     private String content;
     private LocalDateTime createdAt;
-    private String email;
-    private Long boardId;
 }

@@ -102,7 +102,7 @@ public class CommentService {
                 .id(comment.getId())
                 .content(comment.getContent())
                 .createdAt(comment.getCreatedAt())
-                .email(comment.getUser().getEmail())
+                .nickname(comment.getUser().getNickname())
                 .boardId(comment.getBoard().getId())
                 .build();
     }
