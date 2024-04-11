@@ -1,6 +1,7 @@
 package com.example.instanttest.service.board;
 
 import com.example.instanttest.api.board.request.BoardRequestDTO;
+import com.example.instanttest.api.board.response.BoardListResponseDTO;
 import com.example.instanttest.api.board.response.BoardResponseDTO;
 import com.example.instanttest.api.comment.response.CommentResponseDTO;
 import com.example.instanttest.config.SecurityUtils;
@@ -55,10 +56,10 @@ public class BoardService {
     }
 
     @Transactional(readOnly = true)
-    public List<BoardResponseDTO> getAllBoards() {
+    public List<BoardListResponseDTO> getAllBoards() {
         List<Board> boards = boardRepository.findAllByDeletedYnFalse();
         return boards.stream()
-                .map(this::convertToDTO)
+                .map(this::convertToBoardDTO)
                 .collect(Collectors.toList());
     }
 
@@ -169,6 +170,16 @@ public class BoardService {
         }
 
         return list;
+    }
+
+    private BoardListResponseDTO convertToBoardDTO(Board board) {
+        return BoardListResponseDTO.builder()
+                .id(board.getId())
+                .title(board.getTitle())
+                .nickname(board.getUser().getNickname())
+                .registeredAt(board.getRegisteredAt())
+                .updatedAt(board.getUpdatedAt())
+                .build();
     }
 
     private BoardResponseDTO convertToDTO(Board board) {

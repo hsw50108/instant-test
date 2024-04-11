@@ -1,6 +1,7 @@
 package com.example.instanttest.api.board;
 
 import com.example.instanttest.api.board.request.BoardRequestDTO;
+import com.example.instanttest.api.board.response.BoardListResponseDTO;
 import com.example.instanttest.api.board.response.BoardResponseDTO;
 import com.example.instanttest.service.board.BoardService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -32,8 +33,8 @@ public class BoardController {
 
     @GetMapping
     @Operation(summary = "전체 게시글 조회", description = "모든 게시글을 조회하는 API")
-    public ResponseEntity<List<BoardResponseDTO>> getAllBoards() {
-        List<BoardResponseDTO> boards = boardService.getAllBoards();
+    public ResponseEntity<List<BoardListResponseDTO>> getAllBoards() {
+        List<BoardListResponseDTO> boards = boardService.getAllBoards();
         return ResponseEntity.ok(boards);
     }
 
