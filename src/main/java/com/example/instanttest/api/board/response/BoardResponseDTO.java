@@ -6,9 +6,8 @@ import lombok.*;
 import java.time.LocalDateTime;
 import java.util.List;
 
-@Getter
-@Setter
 @Builder
+@Getter
 public class BoardResponseDTO {
     private Long id;
     private String title;
