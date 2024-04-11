@@ -22,6 +22,8 @@ public interface BoardRepository extends JpaRepository<Board, Long> {
 
     Optional<Board> findByIdAndDeletedYnFalse(Long id);
 
+    Page<Board> findAllByDeletedYnFalse(Pageable pageable);
+
     Page<Board> findByTitleContainingIgnoreCaseAndDeletedYnFalseOrContentContainingIgnoreCaseAndDeletedYnFalse(String title, String content, Pageable pageable);
 
 //    @EntityGraph(attributePaths = "comments")

@@ -33,8 +33,12 @@ public class BoardController {
 
     @GetMapping
     @Operation(summary = "전체 게시글 조회", description = "모든 게시글을 조회하는 API")
-    public ResponseEntity<List<BoardListResponseDTO>> getAllBoards() {
-        List<BoardListResponseDTO> boards = boardService.getAllBoards();
+    public ResponseEntity<Page<BoardListResponseDTO>> getAllBoards(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+
+        Pageable pageable = PageRequest.of(page, size);
+        Page<BoardListResponseDTO> boards = boardService.getAllBoards(pageable);
         return ResponseEntity.ok(boards);
     }
 

@@ -56,11 +56,9 @@ public class BoardService {
     }
 
     @Transactional(readOnly = true)
-    public List<BoardListResponseDTO> getAllBoards() {
-        List<Board> boards = boardRepository.findAllByDeletedYnFalse();
-        return boards.stream()
-                .map(this::convertToBoardDTO)
-                .collect(Collectors.toList());
+    public Page<BoardListResponseDTO> getAllBoards(Pageable pageable) {
+        Page<Board> boards = boardRepository.findAllByDeletedYnFalse(pageable);
+        return boards.map(this::convertToBoardDTO);
     }
 
 
