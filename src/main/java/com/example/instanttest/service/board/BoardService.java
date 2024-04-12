@@ -95,9 +95,6 @@ public class BoardService {
         if (board != null && board.getDeletedYn()) { // 삭제된 게시물인 경우
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Board with id " + id + " is deleted"); // 삭제된 게시물인 경우
         }
-        else if(board==null) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Board not found with id: " + id); // 없는 게시물인 경우
-        }
 
         // 현재 사용자의 이메일 가져오기
         String currentUserEmail = SecurityUtils.getCurrentUserEmail();
