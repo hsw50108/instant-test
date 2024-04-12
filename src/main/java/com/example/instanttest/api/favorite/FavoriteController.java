@@ -1,5 +1,6 @@
 package com.example.instanttest.api.favorite;
 
+import com.example.instanttest.service.favorite.FavoriteService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.RequestMapping;

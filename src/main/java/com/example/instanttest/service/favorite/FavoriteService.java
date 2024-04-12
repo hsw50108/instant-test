@@ -1,7 +1,7 @@
 package com.example.instanttest.service.favorite;
 
+import com.example.instanttest.domain.favorite.FavoriteEntity;
 import com.example.instanttest.repository.favorite.FavoriteRepository;
-import com.example.kakaomaptest.data.entity.FavoriteEntity;
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
